@@ -1,7 +1,6 @@
 const channelId = "2936917";		// Channel number of 'Kweekbakje 1'
 const points = 1;					// Number of data points requested
-const url = `https://api.thingspeak.com/channels/${channelId}/feeds.json&results=${points}`;
-
+const url = `https://api.thingspeak.com/channels/${channelId}/feeds.json?results=${points}`;
 
 fetch(url)
   .then(response => response.json())
