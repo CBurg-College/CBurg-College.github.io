@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+
+<script type="text/javascript">
+const channelId = `2936917`;
+const points = 1;
+const url = `https://api.thingspeak.com/channels/${channelId}/feeds.json?results=${points}`;
+
+fetch(url)
+  .then(response => response.json())
+  .then(data => {
+    const feeds = data.feeds;
+    const moisture = document.getElementById(`Grondvochtigheid`)
+    const illumination = document.getElementById(`Lichtsterkte`)
+    const temperature = document.getElementById(`Temperatuur`)
+    const humidity = document.getElementById(`Luchtvochtigheid`)
+    const pump = document.getElementById(`Pomp`)
+    if (feeds && (feeds.length > 0)) {
+        feeds.forEach(feed => {
+          if (moisture) moisture.innerHTML = `${feed.field1}`;
+          if (illumination) illumination.innerHTML = `${feed.field2}`;
+          if (humidity) humidity.innerHTML = `${feed.field3}`;
+          if (temperature) temperature.innerHTML = `${feed.field4}`;
+          if (pump) pump.innerHTML = `${feed.field5}`;
+        });
+    }
+    else {
+      if (moisture) moisture.innerHTML = `###`;
+      if (illumination) illumination.innerHTML = `###`;
+      if (humidity) humidity.innerHTML = `###`;
+      if (temperature) temperature.innerHTML = `###`;
+      if (pump) pump.innerHTML = `###`;
+    }
+  })
+</script>
+
+<style>
+body
+{
+background-image:url("kweekdashboard.png");
+}
+</style>
+
+<body>
+
+<div style="position:absolute; left:10px; top:10px; width:400px; height:529px;">
+<img src="achtergrond.PNG" width=400 height=529>
+</div>
+
+<div style="position:absolute; left:26px; top:20px; width:363px; height:52px; background-color:#FFAA7F;">
+<span style="position:absolute; left:4px; top:4px;  font-family:Segoe UI; font-size:24pt; font-weight:bold; font-style:italic; color:#0000FF; background-color:#FFAA7F; font-weight:bold; font-style:italic;">Kweekbakje van CB</span>
+</div>
+
+<div style="position:absolute; left:111px; top:88px; width:43px; height:52px;">
+<span style="position:absolute; left:4px; top:4px;  font-family:Segoe UI; font-size:24pt; font-weight:bold; font-style:italic; color:#FFFF00; font-weight:bold; font-style:italic;">°C</span>
+</div>
+
+<div style="position:absolute; left:27px; top:88px; width:80px; height:52px;">
+<span id="Temperatuur" style="position:absolute; left:4px; top:4px;  font-family:Segoe UI; font-size:24pt; font-weight:bold; font-style:italic; color:#FFFF00; font-weight:bold; font-style:italic;">21.0</span>
+</div>
+
+<div style="position:absolute; left:308px; top:88px; width:46px; height:52px;">
+<span id="Grondvochtigheid" style="position:absolute; left:4px; top:4px;  font-family:Segoe UI; font-size:24pt; font-weight:bold; font-style:italic; color:#FFFF00; font-weight:bold; font-style:italic;">56</span>
+</div>
+
+<div style="position:absolute; left:357px; top:88px; width:33px; height:52px;">
+<span style="position:absolute; left:4px; top:4px;  font-family:Segoe UI; font-size:24pt; font-weight:bold; font-style:italic; color:#FFFF00; font-weight:bold; font-style:italic;">%</span>
+</div>
+
+<div style="position:absolute; left:430px; top:12px; width:450px; height:260px;">
+<iframe width="450" height="230" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2936917/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Grondvochtigheid&type=column&xaxis=Tijd&yaxis=Procent"></iframe>
+</div>
+
+<div style="position:absolute; left:431px; top:283px; width:450px; height:230px;">
+<iframe width="450" height="230" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/2936917/charts/5?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&title=Pomp&type=column&xaxis=Tijd&yaxis=Procent"></iframe>
+</div>
+
+</body>
+</html>
